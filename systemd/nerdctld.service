@@ -1,0 +1,11 @@
+[Unit]
+Description=nerdctl socket daemon
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/nerdctld
+Restart=always
+User=root
+
+[Install]
+WantedBy=multi-user.target 
