@@ -25,7 +25,7 @@ func main() {
 
 	command := &socket.Command{
 		Args: os.Args[1:],
-		Env:  os.Environ(),
+		Env:  []string{},
 		Pwd:  os.Getenv("PWD"),
 	}
 
