@@ -1,0 +1,12 @@
+- name: 编译整个ops-ctl的项目
+  hosts: localhost
+  environment:
+    DOCKER_BUILDKIT: 1
+  tasks:
+    - name: 编译nerdctld
+      shell: |
+        bash build.sh
+    
+    - name: 上传nerdctld
+      shell: |
+        ops-ci resources-tools upload-file --from ./dist/nerdctld.tar.gz --to laiye-devops:ops-ctl/metadata/nerdctld_{{arch}}.tar.gz
