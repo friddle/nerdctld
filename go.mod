@@ -1,3 +1,3 @@
-module github.com/yourusername/nerdctl-socket
+module github.com/friddle/nerdctld
 
 go 1.21 

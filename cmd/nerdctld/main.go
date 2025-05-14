@@ -8,7 +8,7 @@ import (
 	"os/signal"
 	"syscall"
 
-	"github.com/yourusername/nerdctl-socket/internal/socket"
+	"github.com/friddle/nerdctld/internal/socket"
 )
 
 const socketPath = "/var/run/nerdctl.socket"
@@ -60,7 +60,9 @@ func handleConnection(conn net.Conn) {
 	}
 
 	// 执行nerdctl命令
-	nerdctlCmd := exec.Command("nerdctl", cmd...)
+	os.Chdir(cmd.Pwd)
+	nerdctlCmd := exec.Command("nerdctl", cmd.Args...)
+	nerdctlCmd.Env = append(nerdctlCmd.Env, cmd.Env...)
 	nerdctlCmd.Stdout = conn
 	nerdctlCmd.Stderr = conn
 

@@ -5,7 +5,7 @@ import (
 	"net"
 	"os"
 
-	"github.com/yourusername/nerdctl-socket/internal/socket"
+	"github.com/friddle/nerdctld/internal/socket"
 )
 
 const socketPath = "/var/run/nerdctl.socket"
@@ -23,8 +23,14 @@ func main() {
 	}
 	defer conn.Close()
 
+	command := &socket.Command{
+		Args: os.Args[1:],
+		Env:  os.Environ(),
+		Pwd:  os.Getenv("PWD"),
+	}
+
 	// 发送命令
-	if err := socket.SendCommand(conn, os.Args[1:]); err != nil {
+	if err := socket.SendCommand(conn, command); err != nil {
 		fmt.Printf("发送命令错误: %v\n", err)
 		os.Exit(1)
 	}
